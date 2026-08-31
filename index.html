@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markov Senior</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="window">
+
+  <section id="screen-welcome" class="screen screen--welcome">
+    <h1 class="app-title">Welcome to Markov Senior</h1>
+
+    <div class="banner">
+      <canvas id="banner-canvas"></canvas>
+    </div>
+
+    <p class="blurb">
+      Please select a training sample to learn a related grammar,<br>
+      or use existing markov junior grammars to generate content
+    </p>
+
+    <div class="button-row">
+      <button id="btn-sample" class="tk-btn">Select Sample</button>
+      <button id="btn-grammar" class="tk-btn">Select Grammar/s</button>
+    </div>
+  </section>
+
+  <section id="screen-training" class="screen screen--training is-hidden">
+    <h2 class="section-title">Training</h2>
+
+    <div class="params">
+      <div class="param"><span class="param__k">Name:</span><span class="param__v" id="p-name">output</span></div>
+      <div class="param"><span class="param__k">Mode:</span><span class="param__v" id="p-mode">('divcon',)</span></div>
+      <div class="param"><span class="param__k">Novelty Factor:</span><span class="param__v" id="p-novelty">0.0</span></div>
+      <div class="param"><span class="param__k">Coherency:</span><span class="param__v" id="p-coherency">1.0</span></div>
+
+      <div class="param"><span class="param__k">Diversity Factor:</span><span class="param__v" id="p-diversity">1</span></div>
+      <div class="param"><span class="param__k">Tolerance Factor:</span><span class="param__v" id="p-tolerance">0.05</span></div>
+      <div class="param"><span class="param__k">Population Size:</span><span class="param__v" id="p-population">100</span></div>
+      <div class="param"><span class="param__k">Mutation:</span><span class="param__v" id="p-mutation">0.1</span></div>
+
+      <div class="param"><span class="param__k">Window Size:</span><span class="param__v">4</span></div>
+      <div class="param"><span class="param__k">Middle Window Size:</span><span class="param__v">4</span></div>
+      <div class="param"><span class="param__k">Micro Window Size:</span><span class="param__v">2</span></div>
+      <div class="param"><span class="param__k">Max Grammar Size:</span><span class="param__v">8</span></div>
+
+      <div class="param"><span class="param__k">Macro Window Size:</span><span class="param__v">6</span></div>
+      <div class="param"><span class="param__k">Shuffle Matches:</span><span class="param__v">False</span></div>
+    </div>
+
+    <div class="training-body">
+      <div class="stats">
+        <div class="stat"><span class="stat__k">Current Generation:</span><span class="stat__v" id="s-generation">0</span></div>
+        <div class="stat"><span class="stat__k">Offsprings generated:</span><span class="stat__v" id="s-offspring">0</span></div>
+        <div class="stat"><span class="stat__k">Highest Fitness:</span><span class="stat__v" id="s-best">0.0000</span></div>
+        <div class="stat"><span class="stat__k">Average Fitness:</span><span class="stat__v" id="s-avg">0.0000</span></div>
+        <div class="stat"><span class="stat__k">Current Index:</span><span class="stat__v" id="s-index">0 / 8</span></div>
+        <div class="stat"><span class="stat__k">Level Processing:</span><span class="stat__v" id="s-status">Level completed</span></div>
+      </div>
+
+      <div class="previews">
+        <figure>
+          <figcaption>Best Output</figcaption>
+          <canvas id="best-canvas"></canvas>
+        </figure>
+        <figure>
+          <figcaption>Current Sample</figcaption>
+          <canvas id="sample-canvas"></canvas>
+        </figure>
+      </div>
+    </div>
+
+    <p class="section-title section-title--sub">Generated Level</p>
+    <div class="level-scroll">
+      <canvas id="level-canvas"></canvas>
+    </div>
+
+    <p class="legend" id="legend">
+      <span><b>G</b> ground</span>
+      <span><b>B</b> brick</span>
+      <span><b>?</b> item block</span>
+      <span><b>P</b> pipe</span>
+      <span><b>E</b> enemy</span>
+      <span><b>C</b> collectible</span>
+    </p>
+
+    <div class="button-row">
+      <button id="btn-back" class="tk-btn">Back</button>
+      <button id="btn-save" class="tk-btn">Save Level</button>
+    </div>
+  </section>
+
+</div>
+
+<div id="dialog" class="backdrop is-hidden">
+  <div class="dialog">
+    <div class="dialog__bar"><span id="dialog-title">Select Sample</span></div>
+    <div class="dialog__body">
+      <p class="dialog__hint" id="dialog-hint"></p>
+      <div class="dialog__list" id="dialog-list"></div>
+
+      <div class="dialog__fields">
+        <label>Population Size <input id="f-population" type="number" value="100" min="10" max="500" step="10"></label>
+        <label>Mutation Rate <input id="f-mutation" type="number" value="0.1" min="0" max="1" step="0.05"></label>
+        <label>Segments <input id="f-segments" type="number" value="8" min="2" max="16"></label>
+        <label>Random Seed <input id="f-seed" type="number" value="1337"></label>
+      </div>
+    </div>
+    <div class="dialog__buttons">
+      <button id="btn-start" class="tk-btn">Generate</button>
+      <button id="btn-cancel" class="tk-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="src/renderer.js"></script>
+<script src="src/generator.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
